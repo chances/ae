@@ -32,8 +32,16 @@ final class MyApplication : WMApplication
 
 	override int run(string[] args)
 	{
-		shell = new SDL2Shell(this);
-		shell.video = new SDL2SoftwareVideo();
+		version(Macos)
+		{
+			shell = new OSXShell(this);
+			shell.video = new OSXVideo();
+		}
+		else
+		{
+			shell = new SDL2Shell(this);
+			shell.video = new SDL2SoftwareVideo();
+		}
 		root.addChild(createView());
 		shell.run();
 		shell.video.shutdown();
